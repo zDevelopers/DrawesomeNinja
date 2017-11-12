@@ -1,4 +1,4 @@
-# DrawesomeNinja
+# DrawesomeNinja ![License: CeCILL v2.1](https://img.shields.io/badge/license-CeCILL%20v2.1-blue.svg)
 
 DrawesomeNinja aims to offer an online draw-and-guess game (like Pictionary) as simple, beautiful and straighforward as possible, without neither Flash, Silverlight…, nor any required account.
 

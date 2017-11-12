@@ -6,7 +6,7 @@ Le site est en temps réel, utilisant des websockets. Il est basé sur Django et
 
 ## Composants publics
 
-#### Jeu de dessin
+### Jeu de dessin
 
 Le composant principal du site est le jeu de Pictionary. La page d'accueil offre directement, au premier regard, un bouton “Créer une partie”. À terme, une notion de partie publique listée sur la page d'accueil pourrait être une bonne idée.
 
@@ -18,7 +18,7 @@ La personne créant le salon est d'office nommée _Maître du jeu_. Elle peut do
 
 Le salon de jeu commence sans partie active. Une fois que les gens ont rejoint la partie, le maître du jeu peut lancer la partie, cliquant sur un bouton bien visible pour ce faire. (iSketch lançait la partie immédiatement, avant même que d'autres joueurs soient connectés, mais je ne pense pas que ce soit une bonne idée.) Il serait envisageable de lancer la partie automatiquement dés que deux joueurs sont en ligne, ou trois, ou de proposer l'option à la création du salon de jeu — à discuter.
 
-##### Déroulement d'une partie
+#### Déroulement d'une partie
 
 - Une **partie** est un ensemble de tours de jeu, avec à la fin un vainqueur.
 - Pendant un **tour**, chaque joueur dessine et fait deviner une fois aux autres un mot.
@@ -60,7 +60,7 @@ L'avantage du chat unique est que les joueurs n'ont pas à changer de champ pour
 
 À terme, il pourrait être envisageable de proposer aux dessins d'être enregistrés pour une partie.
 
-##### Système de scores
+#### Système de scores
 
 Lorsqu'un mot est deviné, le joueur ayant deviné et le dessinateur gagnent des points.
 
@@ -75,7 +75,7 @@ Lorsqu'un mot est deviné, le joueur ayant deviné et le dessinateur gagnent des
 
 Ce système est je pense améliorable. À discuter.
 
-##### Cycle de vie des parties ; victoires
+#### Cycle de vie des parties ; victoires
 
 Un salon est créée par un joueur quelconque. Il n'est jamais supprimé.
 
@@ -89,7 +89,7 @@ On peut également envisager une partie sans fin (close lorsque les joueurs se d
 
 Si quelqu'un rejoint un salon alors qu'une partie est en cours, il rejoint automatiquement la partie et est ajouté au tour courant, à la fin. Par contre, il n'a pas d'avantage de points lié au fait d'être arrivé plus tard.
 
-##### Configuration des parties
+#### Configuration des parties
 
 Une partie est configurable suivant plusieurs options.
 
@@ -110,7 +110,7 @@ Le maître du jeu peut choisir d'annuler la partie ; elle sera alors marquée co
 
 Lorsqu'une partie se termine, le salon passe en pause, avec pour le maître du jeu un gros bouton « Nouvelle partie ». Le chat reste actif en permanence.
 
-#### Listes de mots
+### Listes de mots
 
 Un joueur ayant un compte (voir plus loin) peut créer des listes de mots.
 
@@ -120,7 +120,7 @@ Une liste peut être configurée comme étant _publique_, dans ce cas elle sera 
 
 Une idée serait de permettre également de rendre les listes privées (des joueurs isolés) partageables, par exemple sous la forme d'une référence `pseudo@nom-de-la-liste` qu'il serait possible d'entrer sur l'écran de création d'une partie. Si ceci est implémenté, il serait judicieux de permettre aux joueurs de cloner la liste d'un autre joueur pour y apporter des modifications personnelles. Inutile, cela dit, d'aller plus loin à mon sens — listes collaboratives, ou système de propositions de modifications, sont hors de propos ici, sauf si le site grossis à terme et que la fonctionnalité est demandée.
 
-#### Compte utilisateur
+### Compte utilisateur
 
 Les joueurs peuvent (mais c'est facultatif) créer un compte utilisateur. Dans ce cas, leurs statistiques seront enregistrées, à savoir : 
 
@@ -140,7 +140,7 @@ Ouvrir un compte offre également l'accès à l'éditeur de listes mentionné pl
 
 ## Notes d'implémentation technique
 
-#### Ordre d'implémentation
+### Ordre d'implémentation
 
 1. Interfaces d'inscription et de connexion (fournies par Django).
 2. Interfaces de gestion des listes de mots, afin d'avoir un moyen simple de créer les listes publiques (conversion de l'entrée brute des mots en les modèles de la base de données avec une table des mots et une des listes des mots, plus une relation `ManyToMany`).
@@ -159,7 +159,7 @@ Ouvrir un compte offre également l'accès à l'éditeur de listes mentionné pl
    - partage & clônage des listes ;
    - …
 
-#### Idées d'implémentation du dessin en temps réel
+### Idées d'implémentation du dessin en temps réel
 
 Le dessin se fait sur un _canvas_, avec des événements au clic & au maintient en fonction de l'outil actuellement choisi.
 
@@ -175,13 +175,13 @@ Contrairement aux autres Pictonary en ligne, l'idée est d'éviter de transfére
 - de proposer un vrai dessin en temps réel aux autres joueurs ;
 - d'optimiser la consommation réseau de l'application.
 
-#### Puissance nécessaire par salon
+### Puissance nécessaire par salon
 
 Pour chaque salon l'image entière courante est stockée en mémoire, afin de pouvoir l'envoyer à tout nouveau client. Ceci plus les données du salon chargées en mémoire et le traitement des messages, on peut estimer que chaque salon nécessite quelques Mio de mémoire vive et un peu de puissance de calcul pour recombiner les pixels de l'image toutes les demi-secondes lorsque quelque chose est dessiné.
 
 Cette valeur peut être revue à la baisse vu que si rien ne change dans le dessin au bout d'une demi-seconde, rien n'est envoyé (logique).
 
-#### Définition d'un protocole WebSockets
+### Définition d'un protocole WebSockets
 
 Il faudra définir proprement un protocole interne pour la communication via WebSockets, par exemple basé sur une charge utile en JSON structurée et contenant un type de paquet, du genre :
 

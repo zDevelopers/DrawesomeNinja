@@ -4,6 +4,8 @@ DrawesomeNinja aims to offer an online draw-and-guess game (like Pictionary) as 
 
 It uses Python 3.6+, Django 1.11, and Django-Channels for websockets support.
 
+_Currently in development._
+
 ## Development installation
 
 Clone this repository into a directory and `cd` into it. Then, with Python 3.6 installed on the system:

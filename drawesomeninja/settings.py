@@ -40,7 +40,10 @@ INSTALLED_APPS = [
 
     'channels',
 
+    # Warning: the order of the apps below is *important*;
+    # be carful if you alter this as it may break foreigns keys.
     'members.apps.MembersConfig',
+    'words_lists.apps.WordsListsConfig',
     'drawings.apps.DrawingsConfig',
 ]
 
@@ -128,3 +131,12 @@ STATIC_URL = '/static/'
 # User profiles
 
 AUTH_PROFILE_MODULE = 'members.Profile'
+
+
+# App configuration
+
+DRAWESOME = {
+    'GAMES_DEFAULTS': {
+        'TOUR_DURATION': 4
+    }
+}

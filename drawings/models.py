@@ -64,8 +64,7 @@ class DrawingRoom(models.Model):
 
     def __str__(self):
         return (f'{self.slug} '
-                f'(drawers: {len(self.users)} -'
-                f' list: {self.words_list.name}#{self.words_list.pk})')
+                f'(list: {self.words_list.name}#{self.words_list.id})')
 
 
 class Drawer(models.Model):

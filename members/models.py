@@ -6,7 +6,7 @@ class Profile(models.Model):
 	'''
 	An user profile (to add data to the standard contrib.auth User model)
 	'''
-	user = models.OneToOneField(User)
+	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	ip_address = models.GenericIPAddressField(
 		'Drawer IP',
 		blank=True,

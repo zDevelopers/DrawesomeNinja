@@ -7,13 +7,16 @@ name = "pypi"
 
 [packages]
 
-django = "*"
+django = ">=2.0"
 channels = "*"
 django-ipware = "*"
 
 
 [dev-packages]
 
+django-debug-toolbar = "*"
+
 
 [requires]
+
 python_version = "3.6"

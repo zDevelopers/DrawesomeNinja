@@ -57,6 +57,18 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# TODO proper dev/prod/base settings isolation
+if DEBUG:
+    INSTALLED_APPS += [
+        'debug_toolbar'
+    ]
+
+    MIDDLEWARE = [
+        'debug_toolbar.middleware.DebugToolbarMiddleware'
+    ] + MIDDLEWARE
+
+
 ROOT_URLCONF = 'drawesomeninja.urls'
 
 TEMPLATES = [
@@ -76,6 +88,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'drawesomeninja.wsgi.application'
+
+INTERNAL_IPS = [
+    '127.0.0.1'
+]
 
 
 # Database

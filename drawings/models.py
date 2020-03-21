@@ -43,6 +43,7 @@ class DrawingRoom(models.Model):
         blank=True,
         null=True,
         default=None,
+        on_delete=models.PROTECT,
         related_name='+'
     )
 

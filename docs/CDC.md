@@ -34,7 +34,14 @@ Dans une partie, on dessine chacun son tour, dans un ordre aléatoire pour les g
 
 ##### Zone de dessin
 
-Le joueur qui dessine se voit montré le mot, pioché au hasard dans la liste, en gros plan au milieu de la zone de dessin pendant cinq secondes, avec éventuellement un compteur (5… 4…) avant le début du chrono. Ensuite, il a 4 minutes — configurable par le créateur de la partie — pour dessiner et faire deviner le mot. Pendant ce temps, le mot reste affiché, en plus petit, sous le tableau de peintre.
+Le joueur qui dessine se voit montré le mot, pioché au hasard dans la liste, en gros plan au milieu de la zone de dessin pendant cinq secondes, avec éventuellement un compteur (5… 4…) avant le début du chrono. Ensuite, il a 4 minutes — configurable par le créateur de la partie — pour dessiner et faire deviner le mot.
+
+Pendant ce temps, sous le tableau, le peintre voit le mot entier, et les joueurs voient un trait par lettre, par exemple comme ceci.
+
+```
+_ _ _ _ _ _   _ _ _ _ _ _ _
+```
+
 
 **Évolution** : le chronomètre pourrait être réduit (à 30 secondes, par exemple) lorsque le mot a été deviné par au moins une personne. Il serait judicieux de proposer une option pour ce point.
 
@@ -78,6 +85,12 @@ Si personne n'a déjà deviné, le dessinateur peut choisir de passer son tour. 
 
 S'il semble AFK (i.e., n'a rien dessiné 30 secondes après le début de son tour), il passe automatiquement.
 
+Le peintre peut donner un ou plusieurs indices aux joueurs. Ce faisant, il minimise ses gains. Les indices ajoutent des lettres (aléatoires ? les premières ?) au mot, comme suit.
+
+```
+_ A _ _ _ _   _ _ _ H _ _ _
+```
+
 Un point à discuter est celui du nombre de chats : vaut-il mieux un seul chat qui sert à discuter et à proposer une solution, ou un chat pour discuter et une zone de texte pour proposer un mot ?
 L'avantage du chat unique est que les joueurs n'ont pas à changer de champ pour discuter et proposer. C'est plus efficace, surtout dans le cadre d'un jeu basé sur la vitesse. Par contre, il faut bien le faire comprendre.
 
@@ -91,8 +104,9 @@ Nous sommes globalement d'accord sur le fait qu'un canal unique de discussion es
 
 Lorsqu'un mot est deviné, le joueur ayant deviné et le dessinateur gagnent des points.
 
-- Le dessinateur gagne trois points par joueur devinant le mot.
-  Si tout le monde sans exception devine le mot, un bonus de 5 points est offert à ce dernier.
+- Le dessinateur gagne trois points par joueur devinant le mot.  
+  S'il a donné un indice, il reçoit deux points seulement, et un seul avec deux indices ou plus.  
+  Si tout le monde sans exception devine le mot, un bonus de 5 points est offert au peintre.
 - En ce qui concerne les joueurs, ils gagnent des points en fonction de leur classement : 
   - le premier à deviner gagne dix points ;
   - le second, huit points ;

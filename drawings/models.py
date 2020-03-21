@@ -59,7 +59,7 @@ class DrawingRoom(models.Model):
         related_name='+'
     )
     tour_duration = models.IntegerField(
-        _('Duration per tour, in minutes'),
+        _('Duration per tour, in seconds'),
         default=settings.DRAWESOME['GAMES_DEFAULTS']['TOUR_DURATION']
     )
 
@@ -71,7 +71,7 @@ class DrawingRoom(models.Model):
 class Drawer(models.Model):
     '''
     Represents a drawer, associated with a site user (authenticated)
-    or not (named anonymous). Any player in a drawing room gets a Drawer
+    or not (anonymous). Any player in a drawing room gets a Drawer
     object in database, associated with its Profile model (for history
     and such things) if the user is authenticated.
 

@@ -151,8 +151,10 @@ AUTH_PROFILE_MODULE = 'members.Profile'
 
 # App configuration
 
+ASGI_APPLICATION = "drawesomeninja.routing.application"
+
 DRAWESOME = {
     'GAMES_DEFAULTS': {
-        'TOUR_DURATION': 4
+        'TOUR_DURATION': 90
     }
 }

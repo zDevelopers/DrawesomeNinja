@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'channels',
 
     # Warning: the order of the apps below is *important*;
-    # be carful if you alter this as it may break foreigns keys.
+    # be careful if you alter this as it may break foreigns keys.
     'members.apps.MembersConfig',
     'words_lists.apps.WordsListsConfig',
     'drawings.apps.DrawingsConfig',
@@ -149,9 +149,17 @@ STATIC_URL = '/static/'
 AUTH_PROFILE_MODULE = 'members.Profile'
 
 
-# App configuration
+# Channels configuration
 
 ASGI_APPLICATION = "drawesomeninja.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    },
+}
+
+
+# App configuration
 
 DRAWESOME = {
     'GAMES_DEFAULTS': {

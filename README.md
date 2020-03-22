@@ -16,7 +16,7 @@ $ pip install --user pipenv
 
 # Install all the project's dependencies
 # This will also create the virtualenv for the project
-$ pipenv install
+$ pipenv install --dev
 
 # Enter the virtualenv
 $ pipenv shell

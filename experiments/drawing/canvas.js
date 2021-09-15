@@ -1,29 +1,24 @@
-// DOM vars
 let drawForm = document.querySelector("#draw");
 let clearBtn = document.querySelector("#clear");
 
-// vars
-//drawMode[0]: boolean : mouseDown
-//drawMode[1]: 0: none, 1: brush, 2: eraser, 3: bucket
-let drawMode = [false, 0];
-// Brush color
-let brColor = [255, 200, 100];
-// Background color
+// 0: none, 1: brush, 2: eraser, 3: bucket
+let drawMode = 0;
+let brushColor = [255, 200, 100];
 let bgColor = 240;
-// Precedent point (last frame)
-let precPt = [];
+let precPoint = [];
 
-// DOM handlers
 // Radio buttons
-drawForm.addEventListener("change", () => {
+function formOnChange() {
   for (let ch of drawForm.children) {
     if (ch.localName == "input" && ch.checked) {
-      drawMode[1] = Number(ch.value);
-      precPt = [];
-    };
+      drawMode = Number(ch.value);
+      precPoint = [];
+    }
   }
-});
-drawForm.dispatchEvent(new Event("change"));
+}
+
+drawForm.addEventListener("change", formOnChange);
+formOnChange();
 
 // Clear
 clearBtn.addEventListener("click", e => {
@@ -33,45 +28,46 @@ clearBtn.addEventListener("click", e => {
 });
 
 function setup() {
+  // w, h
   createCanvas(800, 800);
   canvas.style.border = "1px solid black";
   canvas.style.margin = "10px";
 
-  strokeWeight(10);
   background(240);
 }
 
 function draw() {
-  if (drawMode[0]) {
-    if (drawMode[1] == 1 || drawMode[1] == 2) {
-      let precPtChanged = (precPt[0] != mouseX || precPt[1] != mouseY);
-      let chColor = drawMode[1] == 1 ? brColor : bgColor;
+  if (mouseIsDown) {
+    if (drawMode == 1 || drawMode == 2) {
+      let precPointChanged = (precPoint[0] != mouseX || precPoint[1] != mouseY);
+      let chColor = drawMode == 1 ? brushColor : bgColor;
+      let chWeight = drawMode == 1 ? 10 : 20;
 
-      if (precPt[0] && precPtChanged) {
+      if (precPoint[0] && precPointChanged) {
         noFill();
+        strokeWeight(chWeight);
         stroke(chColor);
-        console.log(`line of color ${chColor} from ${precPt[0]}, ${precPt[1]} to ${mouseX}, ${mouseY}`);
-        line(precPt[0], precPt[1], mouseX, mouseY);
+        console.log(`line of color ${chColor} from ${precPoint[0]}, ${precPoint[1]} to ${mouseX}, ${mouseY}`);
+        line(precPoint[0], precPoint[1], mouseX, mouseY);
       }
 
-      if (!precPt[0] || precPtChanged) {
+      if (!precPoint[0] || precPointChanged) {
         noStroke();
         fill(chColor);
+        strokeWeight(chWeight);
         ellipse(mouseX, mouseY, 10, 10);
-        precPt = [mouseX, mouseY];
+        precPoint = [mouseX, mouseY];
       }
     }
   }
 }
 
 function mouseDown() {
-  if (drawMode[1] == 3) {
+  if (drawMode == 3) {
     console.log(`fill of color ${brColor} at ${mouseX}, ${mouseY}`);
   }
-  drawMode[0] = true;
 }
 
 function mouseUp() {
-  drawMode[0] = false;
-  precPt = [];
+  precPoint = [];
 }

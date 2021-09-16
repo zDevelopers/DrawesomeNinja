@@ -24,7 +24,7 @@ formOnChange();
 clearBtn.addEventListener("click", e => {
   e.preventDefault();
   background(240);
-  console.log("clear");
+  //console.log("clear");
 });
 
 function setup() {
@@ -47,7 +47,7 @@ function draw() {
         noFill();
         strokeWeight(chWeight);
         stroke(chColor);
-        console.log(`line of color ${chColor} from ${precPoint[0]}, ${precPoint[1]} to ${mouseX}, ${mouseY}`);
+        //console.log(`line of color ${chColor} from ${precPoint[0]}, ${precPoint[1]} to ${mouseX}, ${mouseY}`);
         line(precPoint[0], precPoint[1], mouseX, mouseY);
       }
 
@@ -55,16 +55,83 @@ function draw() {
         noStroke();
         fill(chColor);
         strokeWeight(chWeight);
-        ellipse(mouseX, mouseY, 10, 10);
+        ellipse(mouseX, mouseY, chWeight, chWeight);
         precPoint = [mouseX, mouseY];
       }
     }
   }
 }
 
+function bucketFill(startX, startY) {
+  let ctxData = ctx.getImageData(0, 0, width, height);
+  let startPos = (startY * width + startY) * 4;
+  let [startR, startG, startB] = ctxData.data.subarray(startPos, startPos + 3);
+  let pixelStack = [[startX, startY]];
+  
+  while (pixelStack.length) {
+    let [x, y] = pixelStack.pop();
+    let pixelPos = (y * width + x) * 4;
+
+    while (y-- >= 0 && matchStartColor(pixelPos)) {
+      pixelPos -= width * 4;
+    }
+    pixelPos += width * 4;
+
+    ++y;
+    let reachLeft = false, reachRight = false;
+
+    while (y++ < height - 1 && matchStartColor(pixelPos)) {
+      colorPixel(pixelPos);
+      
+      if (x > 0) {
+        if (matchStartColor(pixelPos - 4)) {
+          if (!reachLeft) {
+            pixelStack.push([x - 1, y]);
+            reachLeft = true;
+          }
+        }
+        else if (reachLeft) reachLeft = false;
+      }
+  	
+      if (x < width - 1) {
+        if (matchStartColor(pixelPos + 4)) {
+          if (!reachRight) {
+            pixelStack.push([x + 1, y]);
+            reachRight = true;
+          }
+        }
+        else if (reachRight) reachRight = false;
+      }
+  			
+      pixelPos += width * 4;
+    }
+  }
+  
+  ctx.putImageData(ctxData, 0, 0);
+    
+  function matchStartColor(pixelPos) {
+    let r = ctxData.data[pixelPos];
+    let g = ctxData.data[pixelPos + 1];
+    let b = ctxData.data[pixelPos + 2];
+
+    return (Math.abs(r - startR) < 5
+      && Math.abs(g - startG < 5)
+      && Math.abs(b - startB < 5)
+    );
+  }
+  
+  function colorPixel(pixelPos) {
+    ctxData.data[pixelPos] = brushColor[0];
+    ctxData.data[pixelPos + 1] = brushColor[1];
+    ctxData.data[pixelPos + 2] = brushColor[2];
+    ctxData.data[pixelPos + 3] = 255;
+  }
+}
+
 function mouseDown() {
   if (drawMode == 3) {
-    console.log(`fill of color ${brColor} at ${mouseX}, ${mouseY}`);
+    //console.log(`fill of color ${brColor} at ${mouseX}, ${mouseY}`);
+    bucketFill(mouseX, mouseY);
   }
 }
 
